@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_07_17_222359) do
+ActiveRecord::Schema.define(version: 2024_07_17_223258) do
 
   create_table "cards", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
     t.string "last4"
@@ -35,6 +35,17 @@ ActiveRecord::Schema.define(version: 2024_07_17_222359) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "statements", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
+    t.datetime "performed_at"
+    t.integer "cost"
+    t.string "merchant"
+    t.integer "transaction_id"
+    t.bigint "category_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["category_id"], name: "index_statements_on_category_id"
+  end
+
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
     t.string "name"
     t.string "email"
@@ -48,5 +59,6 @@ ActiveRecord::Schema.define(version: 2024_07_17_222359) do
 
   add_foreign_key "cards", "users"
   add_foreign_key "categories", "companies"
+  add_foreign_key "statements", "categories"
   add_foreign_key "users", "companies"
 end
